@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Ktpt.CourseOrder.Views.GameView">
+	<ScrollViewer>
+		<StackPanel Spacing="10" MaxWidth="700" HorizontalAlignment="Left">
+			<TextBlock x:Name="NameText" Classes="heading" />
+			<TextBlock x:Name="PriceText" FontWeight="Bold" FontSize="20" />
+			<TextBlock x:Name="StockText" />
+
+			<TextBlock Text="Количество:" Margin="0,10,0,0" />
+			<TextBox x:Name="QuantityBox" Text="1" Width="160" HorizontalAlignment="Left" />
+
+			<StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+				<Button x:Name="SaveButton" Content="Оформить заказ" Classes="accent" Click="SaveClick" />
+				<Button Content="Назад" Click="BackClick" />
+			</StackPanel>
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

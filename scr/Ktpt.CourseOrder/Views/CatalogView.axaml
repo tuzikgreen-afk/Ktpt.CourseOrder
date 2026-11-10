@@ -1,0 +1,92 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="using:Ktpt.CourseOrder.Converters"
+             xmlns:models="using:Ktpt.CourseOrder.Models"
+             x:Class="Ktpt.CourseOrder.Views.CatalogView"
+             Tag="Каталог настольных игр">
+	<ScrollViewer>
+		<StackPanel Spacing="15" MaxWidth="900" HorizontalAlignment="Center">
+
+			<!-- Панель фильтров -->
+			<Border Background="#F0F0F0" CornerRadius="8" Padding="15">
+				<StackPanel Spacing="10">
+					<TextBlock Text="Фильтры и поиск" FontWeight="Bold" FontSize="16" />
+
+					<!-- Категория -->
+					<StackPanel Orientation="Horizontal" Spacing="10">
+						<TextBlock Text="Категория:" VerticalAlignment="Center" Width="100"/>
+						<ComboBox x:Name="CategoryBox" Width="250" PlaceholderText="Все категории"
+								  SelectionChanged="CategoryBox_SelectionChanged" />
+					</StackPanel>
+
+					<!-- Поиск -->
+					<StackPanel Orientation="Horizontal" Spacing="10">
+						<TextBlock Text="Поиск:" VerticalAlignment="Center" Width="100"/>
+						<TextBox x:Name="SearchBox" Width="300" Watermark="Название или артикул..."
+                                 TextChanged="SearchBox_TextChanged" />
+					</StackPanel>
+
+					<!-- Сортировка -->
+					<StackPanel Orientation="Horizontal" Spacing="10">
+						<TextBlock Text="Сортировка:" VerticalAlignment="Center" Width="100"/>
+						<ComboBox x:Name="SortBox" Width="250" SelectionChanged="SortBox_SelectionChanged">
+							<ComboBoxItem Content="По названию (А-Я)" />
+							<ComboBoxItem Content="По названию (Я-А)" />
+							<ComboBoxItem Content="По цене (возрастание)" />
+							<ComboBoxItem Content="По цене (убывание)" />
+							<ComboBoxItem Content="По остатку (возрастание)" />
+							<ComboBoxItem Content="По остатку (убывание)" />
+						</ComboBox>
+					</StackPanel>
+
+					<Button Content="Сбросить фильтры" Click="ResetClick" HorizontalAlignment="Left" Width="180" />
+				</StackPanel>
+			</Border>
+
+			<!-- Счётчик -->
+			<TextBlock x:Name="CountText" FontSize="14" Foreground="#666666" />
+
+			<!-- Сетка карточек -->
+			<ItemsControl x:Name="GamesList">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel ItemWidth="240" ItemHeight="320" />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+
+				<ItemsControl.ItemTemplate>
+					<DataTemplate DataType="models:Game">
+						<Border Background="White" CornerRadius="8" Padding="10" Margin="7"
+                                BoxShadow="0 2 4 #20000000">
+							<StackPanel Spacing="8">
+								<Border Background="#E0E0E0" Height="140" CornerRadius="4" ClipToBounds="True">
+									<Image Source="{Binding ImagePath, Converter={x:Static converters:BitmapAssetValueConverter.Instance}}"
+                                           Stretch="Uniform" />
+								</Border>
+
+								<TextBlock Text="{Binding GameName}" FontWeight="Bold" TextWrapping="Wrap" MaxLines="2" />
+
+								<TextBlock FontSize="12" Foreground="#666666">
+									<Run Text="{Binding Category.CategoryName}" />
+									<Run Text=" • " />
+									<Run Text="{Binding Publisher.PublisherName}" />
+								</TextBlock>
+
+								<Grid ColumnDefinitions="*,Auto" Margin="0,5,0,0">
+									<TextBlock Text="{Binding BasePrice, StringFormat='{}{0:N2} ₽'}"
+                                               FontWeight="Bold" Foreground="#4A607A" FontSize="16" />
+									<TextBlock Text="{Binding AvailableStock, StringFormat='Ост: {0}'}"
+                                               FontSize="12" VerticalAlignment="Center" Grid.Column="1" />
+								</Grid>
+
+								<Button Content="Оформить" Classes="accent" HorizontalAlignment="Stretch"
+                                        Tag="{Binding GameId}" Click="OrderClick" />
+							</StackPanel>
+						</Border>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

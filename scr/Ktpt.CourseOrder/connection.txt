@@ -1,0 +1,1 @@
+﻿Server=localhost\SQLEXPRESS;Database=boardgames_shop;Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;
