@@ -78,6 +78,7 @@ public static class OrderService
     // ---------- 2. Список всех заказов ----------
     public static async Task<List<Order>> GetOrdersAsync()
     {
+        Session.RequireStaff();
         using var db = Db.Create();
         return await db.Orders
             .Include(o => o.Client)
@@ -90,6 +91,7 @@ public static class OrderService
     // ---------- 3. Один заказ со всем составом ----------
     public static async Task<Order?> GetOrderAsync(int orderId)
     {
+        Session.RequireStaff();
         using var db = Db.Create();
         return await db.Orders
             .Include(o => o.Client)
@@ -102,6 +104,7 @@ public static class OrderService
     // ---------- 4. Изменить дату заказа ----------
     public static async Task ChangeDateAsync(int orderId, DateOnly newDate)
     {
+        Session.RequireAdmin();
         using var db = Db.Create();
         Order? order = await db.Orders.FindAsync(orderId);
         if (order == null)

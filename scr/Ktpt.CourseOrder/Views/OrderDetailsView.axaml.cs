@@ -67,7 +67,7 @@ public partial class OrderDetailsView : UserControl
     private void DeleteOrderClick(object? sender, RoutedEventArgs e)
     {
         itemToDelete = null;
-        ConfirmText.Text = "Удалить весь заказ? Все его места вернутся в потоки.";
+        ConfirmText.Text = "Удалить весь заказ? Все его товары вернутся на склад.";
         ConfirmPanel.IsVisible = true;
     }
 
@@ -80,7 +80,7 @@ public partial class OrderDetailsView : UserControl
             return;
         }
         itemToDelete = item.OrderItemId;
-        ConfirmText.Text = "Удалить позицию? Её места вернутся в поток. " +
+        ConfirmText.Text = "Удалить позицию? Её товары вернутся на склад. " +
             "Если позиция последняя, удалится и весь заказ.";
         ConfirmPanel.IsVisible = true;
     }

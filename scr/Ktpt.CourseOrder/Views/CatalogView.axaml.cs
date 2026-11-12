@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Ktpt.CourseOrder.Data;
 using Ktpt.CourseOrder.Models;
+using Ktpt.CourseOrder.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -105,6 +106,12 @@ public partial class CatalogView : UserControl
 
     private void OrderClick(object? sender, RoutedEventArgs e)
     {
+        if (Session.IsGuest)
+        {
+            MainWindow.Instance.ShowMessage("Чтобы оформить заказ, войдите в систему.");
+            return;
+        }
+
         if (sender is Button button && button.Tag is int gameId)
         {
             MainWindow.Instance.OpenPage(new GameView { GameId = gameId });
